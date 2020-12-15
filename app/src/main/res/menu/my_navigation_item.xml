@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/action_basic_tone"
+    android:icon="@drawable/ic_basictone"
+    android:title="BasicTone" />
+<item android:id="@+id/action_mfcc"
+    android:icon="@drawable/ic_mfcc"
+    android:title="MFCC" />
+<item android:id="@+id/action_spectrogramm"
+    android:icon="@drawable/ic_spectrogramm"
+    android:title="Spectrogramm" />
+</menu>
