@@ -7,8 +7,12 @@ import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.nvsces.mynative.APP_ACTIVITY
+import com.nvsces.mynative.REPOSITORY
 import com.nvsces.mynative.checkPermissions
+import com.nvsces.speech_processing.database.AppRoomDatabase
+import com.nvsces.speech_processing.database.AppRoomRepository
 import com.nvsces.speech_processing.databinding.ActivityMainBinding
+import com.nvsces.speech_processing.screens.NoPermissionFragment
 import com.nvsces.speech_processing.screens.VoiceEtalonFragment
 import com.nvsces.speech_processing.utils.replaceFragment
 
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         APP_ACTIVITY = this
         if (checkPermissions(Manifest.permission.RECORD_AUDIO)){
-            replaceFragment(VoiceEtalonFragment())
+            replaceFragment(VoiceEtalonFragment(),false)
         }
     }
 
@@ -33,6 +37,12 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         mToolbar = mBinding.toolbarMain
         setSupportActionBar(mToolbar)
+        initRoom()
+    }
+
+    private fun initRoom() {
+            val dao= AppRoomDatabase.getInstance(APP_ACTIVITY).getAppRoomDao()
+            REPOSITORY = AppRoomRepository(dao)
     }
 
     override fun onRequestPermissionsResult(
@@ -44,9 +54,9 @@ class MainActivity : AppCompatActivity() {
         if (ContextCompat.checkSelfPermission(APP_ACTIVITY,
                 Manifest.permission.RECORD_AUDIO
             )== PackageManager.PERMISSION_GRANTED){
-            replaceFragment(VoiceEtalonFragment())
+            replaceFragment(VoiceEtalonFragment(),false)
         }else {
-            //выводи фрагмент
+            replaceFragment(NoPermissionFragment(),false)
         }
     }
 

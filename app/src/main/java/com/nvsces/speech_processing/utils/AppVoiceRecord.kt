@@ -3,8 +3,6 @@ package com.nvsces.speech_processing.utils
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import com.nvsces.mynative.currentRun
-import com.nvsces.mynative.etalonRun
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,8 +40,8 @@ class AppVoiceRecord(private val fs:Int) {
 
     fun stop() {
         isRecorder=false
-        audioRecord!!.stop()
+        audioRecord?.stop()
     }
 
-    fun release() { if (!isRecorder && audioRecord != null) audioRecord!!.release()   }
+    fun release() { if (!isRecorder && audioRecord != null) audioRecord?.release()   }
 }

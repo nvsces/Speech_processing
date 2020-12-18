@@ -1,8 +1,10 @@
 package com.nvsces.speech_processing.utils
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.nvsces.mynative.APP_ACTIVITY
+import com.nvsces.speech_processing.MainActivity
 import com.nvsces.speech_processing.R
 import kotlin.collections.ArrayList
 import kotlin.math.abs
@@ -154,12 +156,31 @@ fun short2FloatArray(shortArray: ShortArray):FloatArray{
     return floatArray
 }
 
+fun short2DoubleArrayNorm(shortArray: ShortArray):DoubleArray{
+    val maxAr= maxValueAbs(shortArray)
+    val doubleArray=DoubleArray(shortArray.size)
+    for (i in shortArray.indices){
+        doubleArray[i]=shortArray[i]/maxAr
+    }
+    return doubleArray
+}
+
+
 fun short2DoubleArray(shortArray: ShortArray):DoubleArray{
     val doubleArray=DoubleArray(shortArray.size)
     for (i in shortArray.indices){
         doubleArray[i]=shortArray[i].toDouble()
     }
     return doubleArray
+}
+
+fun maxValueAbs(array: ShortArray): Double {
+    var max = abs(array[0].toDouble())
+    for (i in 0 until array.size) {
+        if (abs(array[i].toDouble()) > max)
+            max = abs(array[i].toDouble())
+    }
+    return max
 }
 
 
@@ -171,6 +192,8 @@ fun maxValueAbs(array: List<Double>): Float {
     }
     return max
 }
+
+
 
 fun maxValue(array: ArrayList<Float>): Float {
     var max = 0f
@@ -235,6 +258,12 @@ fun searchMax(array: ShortArray): Float {
     return max
 }
 
+
+fun restartActivity(){
+    val intent= Intent(APP_ACTIVITY, MainActivity::class.java)
+    APP_ACTIVITY.startActivity(intent)
+    APP_ACTIVITY.finish()
+}
 
 fun replaceFragment(fragment: Fragment, addStack:Boolean=true){
     if (addStack) {
